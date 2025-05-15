@@ -70,7 +70,7 @@ class SistemaGerenciadorSenhas:
             print("1. Cadastro")
             print("2. Login")
             print("0. Sair")
-            opcao = input("Escolha uma opção: ").stripe()
+            opcao = input("Escolha uma opção: ").strip()
 
             if opcao == "1":
                 self.cadastrar_usuario()
@@ -172,7 +172,7 @@ class SistemaGerenciadorSenhas:
             print("4. Deletar senhas")
             print("5. Gerar senhas")
             print("0. Sair")
-            opcao = input("Escolha uma opção: ").stripe()
+            opcao = input("Escolha uma opção: ").strip()
 
             if opcao == "1":
                 self.cadastrar_senha(usuario)
