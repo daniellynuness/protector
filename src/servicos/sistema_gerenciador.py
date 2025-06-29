@@ -1,6 +1,6 @@
 import time
 from src.usuario.usuario import Usuario
-from src.utilitario.validadores import classificar_senha
+from src.utilitario.validadores import classificar_senha, verificar_senha_vazada
 from src.utilitario.geradores import gerar_senha
 from src.servicos.email import Email
 from src.utilitario.limpeza import limpar_tela
@@ -17,10 +17,23 @@ class SistemaGerenciadorSenhas:
             nome = input("Nome: ").strip()
             email = input("Email: ").strip()
             login = input("Login: ").strip()
-            senha = input("Senha: ").strip()
 
-            if not all([nome, email, login, senha]):
-                print("Todos os campos são obrigatórios!")
+            while True:
+                senha = input("Senha: ").strip()
+                if not senha:
+                    print("A senha não pode estar vazia!")
+                    continue
+
+                contagem_vazamento = verificar_senha_vazada(senha)
+                if contagem_vazamento > 0:
+                    print(f"\n[ALERTA DE SEGURANÇA] Esta senha foi encontrada em {contagem_vazamento} vazamentos de dados conhecidos.")
+                    print("Para sua segurança, recomendamos fortemente que você escolha outra senha.")
+                elif contagem_vazamento == -1:
+                    print("\n[Aviso] Não foi possível verificar se a senha foi vazada. Prossiga com cautela.")
+                break
+
+            if not all([nome, email, login]):
+                print("Os campos nome, email e login são obrigatórios!")
                 limpar_tela()
                 return self.cadastrar_usuario()
 
@@ -87,12 +100,22 @@ class SistemaGerenciadorSenhas:
             if any(credencial['titulo'] == titulo for credencial in usuario.senhas):
                 print("Este título já está cadastrado!")
                 continue
-                
-            senha = input("Senha: ").strip()
-            if not senha:
-                print("A senha não pode estar vazia!")
-                continue
 
+            while True:
+                senha = input("Senha: ").strip()
+                if not senha:
+                    print("A senha não pode estar vazia!")
+                    continue
+
+                contagem_vazamento = verificar_senha_vazada(senha)
+                if contagem_vazamento > 0:
+                    print(f"\n[ALERTA DE SEGURANÇA] Esta senha foi encontrada em {contagem_vazamento} vazamentos de dados.")
+                    print("Sugerimos que você escolha uma senha mais segura ou use o nosso gerador.")
+                elif contagem_vazamento == -1:
+                    print("\n[Aviso] Não foi possível verificar se a senha foi vazada. Prossiga com cautela.")
+                
+                break
+            
             classificacao = classificar_senha(senha)
             usuario.senhas.append({"titulo": titulo, "senha": senha})
 
