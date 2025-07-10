@@ -15,18 +15,13 @@ class Menus:
             elif opcao == "2":
                 usuario = self.sistema.login_usuario()
                 if usuario:
-<<<<<<< HEAD
                     self.menu_perfil(usuario)
-=======
-                    self.menu_principal(usuario)
->>>>>>> c5bbacc84a700283a24a18c1bcf8f376e5317076
             elif opcao == "0":
                 print("Saindo...")
                 break
             else:
                 print("Opção inválida!")
 
-<<<<<<< HEAD
     def menu_perfil(self, usuario):
         while True:
             print("\n=== Perfis do Usuário ===")
@@ -69,21 +64,12 @@ class Menus:
         perfil = usuario.perfil_atual
         while True:
             print(f"\n=== Menu Principal | Perfil: {perfil.nome} ===")
-=======
-    def menu_principal(self, usuario):
-        while True:
-            print("\n=== Menu Principal ===")
->>>>>>> c5bbacc84a700283a24a18c1bcf8f376e5317076
             print("1. Cadastrar senhas")
             print("2. Visualizar senhas")
             print("3. Atualizar senhas")
             print("4. Deletar senhas")
             print("5. Gerar senhas")
-<<<<<<< HEAD
             print("0. Sair do perfil")
-=======
-            print("0. Sair")
->>>>>>> c5bbacc84a700283a24a18c1bcf8f376e5317076
             opcao = input("Escolha uma opção: ").strip()
 
             if opcao == "1":
@@ -95,15 +81,9 @@ class Menus:
             elif opcao == "4":
                 self.sistema.deletar_senha(usuario)
             elif opcao == "5":
-<<<<<<< HEAD
                 self.sistema.gerar_senha(usuario)
             elif opcao == "0":
                 usuario.perfil_atual = None
-=======
-                self.sistema.gerar_senha()
-            elif opcao == "0":
-                print("Deslogando...")
->>>>>>> c5bbacc84a700283a24a18c1bcf8f376e5317076
                 break
             else:
                 print("Opção inválida!")
