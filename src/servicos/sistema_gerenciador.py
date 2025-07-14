@@ -298,6 +298,7 @@ class SistemaGerenciadorSenhas:
                 "email": usuario.email,
                 "login": usuario.login,
                 "senha_hash": usuario.senha_hash,
+                "salt": usuario.salt,
                 "bloqueado_ate": usuario.bloqueado_ate,
                 "tentativas": usuario.tentativas,
                 "perfis": [
@@ -317,25 +318,33 @@ class SistemaGerenciadorSenhas:
         """Carrega os dados dos usuários e perfis de um arquivo JSON"""
         if not os.path.exists(self.arquivo_dados):
             return
-        with open(self.arquivo_dados, "r", encoding="utf-8") as f:
-            dados = json.load(f)
-            for login, usuario_data in dados.items():
-                usuario = Usuario(
-                    usuario_data["nome"],
-                    usuario_data["email"],
-                    usuario_data["login"],
-                    "dummy"  # senha não será usada, pois vamos sobrescrever o hash
-                )
-                usuario.senha_hash = usuario_data["senha_hash"]
-                usuario.bloqueado_ate = usuario_data.get("bloqueado_ate", None)
-                usuario.tentativas = usuario_data.get("tentativas", 0)
-                for perfil_data in usuario_data["perfis"]:
-                    perfil = Perfil(
-                        perfil_data["nome"],
+        try:
+            with open(self.arquivo_dados, "r", encoding="utf-8") as f:
+                # Se o arquivo estiver vazio, json.load() lançará um erro
+                if os.path.getsize(self.arquivo_dados) == 0:
+                    return
+                dados = json.load(f)
+                for login, usuario_data in dados.items():
+                    usuario = Usuario(
+                        usuario_data["nome"],
+                        usuario_data["email"],
+                        usuario_data["login"],
                         "dummy"  # senha não será usada, pois vamos sobrescrever o hash
                     )
-                    perfil.senha_hash = perfil_data["senha_hash"]
-                    perfil.senhas = perfil_data.get("senhas", [])
-                    perfil.senhas_geradas = perfil_data.get("senhas_geradas", [])
-                    usuario.perfis.append(perfil)
-                self.usuarios[login] = usuario
+                    usuario.senha_hash = usuario_data["senha_hash"]
+                    usuario.salt = usuario_data["salt"]  # Carrega o salt salvo para garantir a consistência
+                    usuario.bloqueado_ate = usuario_data.get("bloqueado_ate", None)
+                    usuario.tentativas = usuario_data.get("tentativas", 0)
+                    for perfil_data in usuario_data["perfis"]:
+                        perfil = Perfil(
+                            perfil_data["nome"],
+                            "dummy"  # senha não será usada, pois vamos sobrescrever o hash
+                        )
+                        perfil.senha_hash = perfil_data["senha_hash"]
+                        perfil.senhas = perfil_data.get("senhas", [])
+                        perfil.senhas_geradas = perfil_data.get("senhas_geradas", [])
+                        usuario.perfis.append(perfil)
+                    self.usuarios[login] = usuario
+        except (json.JSONDecodeError, KeyError) as e:
+            print(f"[AVISO] Erro ao carregar o arquivo de dados '{self.arquivo_dados}': {e}. Começando com uma base de dados vazia.")
+            self.usuarios = {}
