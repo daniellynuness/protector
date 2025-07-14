@@ -1,4 +1,5 @@
 import hashlib
+import os
 from .perfil import Perfil
 
 class Usuario:
@@ -9,24 +10,27 @@ class Usuario:
         self.nome = nome
         self.email = email
         self.login = login
-        self.senha_hash = self._hash_senha(senha)
+        # Gerar um salt e armazenar o hash
+        self.salt = os.urandom(16).hex()
+        self.senha_hash = self._hash_senha(senha, self.salt)
         self.tentativas = 0
         self.bloqueado_ate = None
         self.perfis = []
         self.perfil_atual = None
 
     @staticmethod
-    def _hash_senha(senha):
+    def _hash_senha(senha, salt):
         """        
-        Gera um hash SHA-256 da senha fornecida.
+        Gera um hash SHA-256 "salgado" da senha fornecida.
         """
-        return hashlib.sha256(senha.encode()).hexdigest()
+        senha_salted = salt.encode() + senha.encode()
+        return hashlib.sha256(senha_salted).hexdigest()
 
     def verificar_senha(self, senha):
         """
         Verifica se a senha fornecida corresponde à senha armazenada do usuário.
         """
-        return self.senha_hash == self._hash_senha(senha)
+        return self.senha_hash == self._hash_senha(senha, self.salt)
 
     def adicionar_perfil(self, perfil):
         """Adiciona um novo perfil à lista de perfis do usuário."""

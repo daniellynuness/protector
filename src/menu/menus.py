@@ -1,4 +1,5 @@
 from src.utilitario.limpeza import limpar_tela
+from src.usuario.perfil import Perfil
 
 class Menus:
     """    Classe responsável por gerenciar os menus do sistema.
@@ -69,7 +70,6 @@ class Menus:
                 else:
                     print("Perfil ou senha incorretos!")
             elif opcao == "2":
-                from src.usuario.perfil import Perfil
                 while True:
                     nome = input("Nome do novo perfil: ").strip()
                     if not nome:
