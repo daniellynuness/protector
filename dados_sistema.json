@@ -1,18 +1,1 @@
-{
-    "luizlima": {
-        "nome": "luiz",
-        "email": "luizviniciuscontato1@gmail.com",
-        "login": "luizlima",
-        "senha_hash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
-        "perfis": [
-            {
-                "nome": "vine",
-                "senha_hash": "8bb0cf6eb9b17d0f7d22b456f121257dc1254e1f01665370476383ea776df414",
-                "senhas": [],
-                "senhas_geradas": [
-                    "HDdrp<2c[a"
-                ]
-            }
-        ]
-    }
-}
+{}

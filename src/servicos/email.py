@@ -3,10 +3,14 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 class Email:
+    """
+    Classe para enviar e-mails sobre tentativas de login bloqueadas.
+    Esta classe utiliza o servidor SMTP do Gmail para enviar e-mails.
+    """
     @staticmethod
     def enviar_email(destinatario, mensagem):
         """
-        Envia um e-mail real para o destinatário.
+        Envia um e-mail de notificação sobre tentativas de login bloqueadas.
         """
         # Configurações do servidor SMTP
         smtp_server = "smtp.gmail.com"
