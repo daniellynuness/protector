@@ -34,6 +34,15 @@ A seguir, exemplos do funcionamento do sistema no terminal:
 
 *Bloqueio de conta e envio de e-mail após múltiplas tentativas de login sem sucesso.*
 
+<img width="846" height="231" alt="Captura de tela 2025-07-24 155208" src="https://github.com/user-attachments/assets/ee0c3e9c-2c83-467e-b35e-f3b9510ac551" />
+
+*Alerta de segurança avisando ao usuário quantas vezes a senha que ele utilizou no cadastro já foi vazada.*
+
+<img width="365" height="190" alt="Captura de tela 2025-07-24 155328" src="https://github.com/user-attachments/assets/2055a036-0c3a-478c-a650-e86437539439" />
+
+*Após o usuário realizar o cadastro e login na conta, ele poderá criar seu perfil e ter acesso ao menu principal com todas as funcionalidades do sistema.*
+
+
 ## Tecnologias e Bibliotecas Utilizadas
 
 - `requests`
